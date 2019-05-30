@@ -96,7 +96,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>projetovraptor</finalName>
+		<finalName>api</finalName>
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
@@ -174,7 +174,7 @@
 		</plugins>
 	</build>
 
-	<artifactId>projetovraptor</artifactId>
+	<artifactId>api</artifactId>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
