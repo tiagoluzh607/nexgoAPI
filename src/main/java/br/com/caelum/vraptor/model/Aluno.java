@@ -11,5 +11,18 @@ public class Aluno extends Pessoa {
 		this.cpf = cpf;
 	}
 	
+	@Deprecated
+	public Aluno() {
+		super();
+	}
+
+	public Aluno(String nome, String rg) {
+		this();
+		super.nome = nome;
+		super.rg = rg;
+	}
+	
+	
+	
 	
 }
