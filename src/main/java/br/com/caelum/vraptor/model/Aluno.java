@@ -1,11 +1,15 @@
 package br.com.caelum.vraptor.model;
 
-public class Aluno {
-	private int id;
-	private String nome;
-	private String email;
-	private String rg;
-	private String telefone;
-	private ESexo sexo;
+public class Aluno extends Pessoa {
 	private String cpf;
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
+	
 }
