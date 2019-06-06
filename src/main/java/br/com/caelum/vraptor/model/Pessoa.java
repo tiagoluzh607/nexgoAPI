@@ -1,7 +1,7 @@
 package br.com.caelum.vraptor.model;
 
-public abstract class Pessoa {
-	protected int id;
+public abstract class Pessoa extends Model {
+
 	protected String nome;
 	protected String email;
 	protected String rg;
@@ -9,13 +9,6 @@ public abstract class Pessoa {
 	protected ESexo sexo;
 	
 	
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getNome() {
 		return nome;
 	}
