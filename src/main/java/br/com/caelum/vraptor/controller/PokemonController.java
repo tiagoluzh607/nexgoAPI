@@ -1,10 +1,12 @@
 package br.com.caelum.vraptor.controller;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.dao.JPAUtil;
 import br.com.caelum.vraptor.model.Pokemon;
 import br.com.caelum.vraptor.view.Results;
 
@@ -21,5 +23,24 @@ public class PokemonController {
 		primeiroPokemon.setFraqueza("Eletrico");
 		
 		result.use(Results.json()).from(primeiroPokemon).serialize();
+	}
+	
+	@Get("/salvaPokemon")
+	public void salvaPokemon() {
+		
+		//criar Objeto pokemon
+		
+		Pokemon primeiroPokemon = new Pokemon("Blastoise",3);
+		primeiroPokemon.setTipo("Agua");
+		primeiroPokemon.setFraqueza("Eletrico");
+		
+		//salvar pokemon no banco
+		EntityManager em = new JPAUtil().getEntityManager();
+		em.getTransaction().begin();
+			em.persist(primeiroPokemon);
+		em.getTransaction().commit();
+		em.close();
+		
+		
 	}
 }

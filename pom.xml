@@ -42,6 +42,35 @@
 			<version>4.3.0.Final</version>
 		</dependency>
 		
+		
+		
+		
+		
+		<!-- Esse Cara Faz o Pool de Conexões, com o Hibernate   https://mvnrepository.com/artifact/c3p0/c3p0 -->
+		<dependency>
+		    <groupId>c3p0</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>0.9.1.2</version>
+		</dependency>
+		
+		<!-- Esse cara Ensina o Hibernate a usar um pool de conexoes com c3p0 https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-c3p0</artifactId>
+		    <version>4.3.0.Final</version>
+		</dependency>
+		
+		<!-- Esse é o driver do Postgres https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.4-1200-jdbc41</version>
+		</dependency>
+		
+		
+		
+		
+		
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
