@@ -1,5 +1,8 @@
 package br.com.caelum.vraptor.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Aluno extends Pessoa {
 	private String cpf;
 
