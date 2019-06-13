@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.model;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
@@ -9,6 +11,8 @@ public abstract class Pessoa extends Model {
 	protected String email;
 	protected String rg;
 	protected String telefone;
+	
+	@Enumerated(EnumType.STRING)
 	protected ESexo sexo;
 	
 	
