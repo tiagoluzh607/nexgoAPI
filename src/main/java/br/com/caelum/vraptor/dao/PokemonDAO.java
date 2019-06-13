@@ -6,53 +6,22 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+
+import br.com.caelum.vraptor.model.Model;
 import br.com.caelum.vraptor.model.Pokemon;
 
-public class PokemonDAO {
-
-	private EntityManager em;
+public class PokemonDAO extends DAO {
 
 	public PokemonDAO(EntityManager em) {
-		this.em = em;
-	}
-	
-	/**
-	 * Persiste um Objeto passado como parâmetro no banco de dados
-	 * @param pokemon
-	 */
-	public Pokemon Insert(Pokemon pokemon) {
-		em.persist(pokemon);
-		return pokemon;
+		super(em);
+		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Persiste ou atualiza um objeto passado como parâmetro no banco de dados
-	 * @param pokemon
-	 */
-	public Pokemon InsertOrUpdate(Pokemon pokemon) { 
-		pokemon = em.merge(pokemon);
-		em.persist(pokemon);
-		return pokemon;
-	}
-	
-	/**
-	 * Deleta um Objeto passado como parâmetro no banco de dados
-	 * OBS: Este Objeto deve ter o ID informado
-	 * @param pokemon
-	 */
-	public void Delete(Pokemon pokemon) {
-		pokemon = em.merge(pokemon);
-		em.remove(pokemon);
-	}
-	
-	/**
-	 * Traz um Registro pesquisando por id no banco de dados
-	 * @param model
-	 * @return
-	 */
+
+	@Override
 	public List<Pokemon> lista(){
 		String jpql = "select obj from "+ Pokemon.class.getSimpleName() +" as obj";
-		Query query = em.createQuery(jpql);
+		Query query = super.em.createQuery(jpql);
 		
 		List<Pokemon> pokemons;
 		try {
@@ -61,4 +30,6 @@ public class PokemonDAO {
 		
 		return pokemons;
 	}
+
+
 }

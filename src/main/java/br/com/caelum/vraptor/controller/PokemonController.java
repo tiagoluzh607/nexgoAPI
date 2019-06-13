@@ -1,5 +1,7 @@
 package br.com.caelum.vraptor.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -39,6 +41,7 @@ public class PokemonController {
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
 			
+			List<Pokemon> pokemons =  new PokemonDAO(em).lista();
 			new PokemonDAO(em).Insert(primeiroPokemon);
 		
 		em.getTransaction().commit();
