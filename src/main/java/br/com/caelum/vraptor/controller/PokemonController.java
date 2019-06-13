@@ -7,6 +7,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.dao.JPAUtil;
+import br.com.caelum.vraptor.dao.PokemonDAO;
 import br.com.caelum.vraptor.model.Pokemon;
 import br.com.caelum.vraptor.view.Results;
 
@@ -37,7 +38,9 @@ public class PokemonController {
 		//salvar pokemon no banco
 		EntityManager em = new JPAUtil().getEntityManager();
 		em.getTransaction().begin();
-			em.persist(primeiroPokemon);
+			
+			new PokemonDAO(em).Insert(primeiroPokemon);
+		
 		em.getTransaction().commit();
 		em.close();
 		
