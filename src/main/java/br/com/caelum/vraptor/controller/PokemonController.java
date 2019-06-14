@@ -11,6 +11,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.dao.JPAUtil;
 import br.com.caelum.vraptor.dao.PokemonDAO;
 import br.com.caelum.vraptor.model.Pokemon;
+import br.com.caelum.vraptor.service.EntityManagerService;
 import br.com.caelum.vraptor.view.Results;
 
 @Controller
@@ -31,21 +32,25 @@ public class PokemonController {
 	@Get("/salvaPokemon")
 	public void salvaPokemon() {
 		
-		//criar Objeto pokemon
-		
-		Pokemon primeiroPokemon = new Pokemon("Blastoise",3);
-		primeiroPokemon.setTipo("Agua");
-		primeiroPokemon.setFraqueza("Eletrico");
-		
-		//salvar pokemon no banco
 		EntityManager em = new JPAUtil().getEntityManager();
-		em.getTransaction().begin();
+		try {
+			//criar Objeto pokemon		
+			Pokemon primeiroPokemon = new Pokemon("Blastoise",3);
+			primeiroPokemon.setTipo("Agua");
+			primeiroPokemon.setFraqueza("Eletrico");
 			
-			List<Pokemon> pokemons =  new PokemonDAO(em).lista();
-			new PokemonDAO(em).Insert(primeiroPokemon);
+			//salvar pokemon no banco		
+			em.getTransaction().begin();
+				
+				List<Pokemon> pokemons =  new PokemonDAO(em).lista();
+				new PokemonDAO(em).Insert(primeiroPokemon);
+			
+			em.getTransaction().commit();
+			em.close();
 		
-		em.getTransaction().commit();
-		em.close();
+		}finally {
+			EntityManagerService.LiberaConnection(em);
+		}
 		
 		
 	}

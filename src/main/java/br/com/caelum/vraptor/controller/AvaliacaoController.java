@@ -16,6 +16,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.dao.AvaliacaoDAO;
 import br.com.caelum.vraptor.dao.JPAUtil;
 import br.com.caelum.vraptor.model.Avaliacao;
+import br.com.caelum.vraptor.service.EntityManagerService;
 import br.com.caelum.vraptor.view.Results;
 
 @Controller
@@ -26,37 +27,45 @@ public class AvaliacaoController {
 	@Get("/avaliacoes")
 	public void buscaAvaliacoes() {
 		
-		List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
-
-		//busca do Banco
 		EntityManager em = new JPAUtil().getEntityManager();
-		
-		avaliacoes = new AvaliacaoDAO(em).lista();
-		
-		result.use(Results.json()).withoutRoot().from(avaliacoes).include("aluno").serialize();
+		try {
+			List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
+	
+			//busca do Banco
+			
+			avaliacoes = new AvaliacaoDAO(em).lista();
+			
+			result.use(Results.json()).withoutRoot().from(avaliacoes).include("aluno").serialize();
+		}finally {
+			EntityManagerService.LiberaConnection(em);
+		}
 	}
 	
 	@Get("/avaliacoes/{avaliacao.id}")
 	public void buscaAvaliacao(Avaliacao avaliacao) {
 		
-		//validacao
-		if(avaliacao.getId() < 1) {
-			result.use(Results.http()).sendError(400, "Você deve passar o ID");
-			return;
-		}
-		
 		EntityManager em = new JPAUtil().getEntityManager();
-		AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
-		
-		Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
-		
-		if(avaliacaoDoBanco == null) { //verifica se existe avaliacao com aquele ID
-			result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
-			return;
-		}
+		try {
+			//validacao
+			if(avaliacao.getId() < 1) {
+				result.use(Results.http()).sendError(400, "Você deve passar o ID");
+				return;
+			}
 			
-		result.use(Results.json()).from(avaliacaoDoBanco).include("aluno").serialize();
+			
+			AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
+			
+			Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
+			
+			if(avaliacaoDoBanco == null) { //verifica se existe avaliacao com aquele ID
+				result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
+				return;
+			}
 				
+			result.use(Results.json()).from(avaliacaoDoBanco).include("aluno").serialize();
+		}finally {
+			EntityManagerService.LiberaConnection(em);
+		}
 	}
 	
 	
@@ -64,24 +73,28 @@ public class AvaliacaoController {
 	@Consumes("application/json")
 	public void adicionaAvaliacao(Avaliacao avaliacao) {
 		
-		//validacoes
-		if(avaliacao.getId() > 0) {
-			result.use(Results.http()).sendError(400, "O avaliacao não pode ter ID, se quiser atualizar use o method PUT");
-			return;
-		}
-		
-		
-		//inseri no banco e busca objeto persistido
 		EntityManager em = new JPAUtil().getEntityManager();
-		
-		em.getTransaction().begin();
-		
-		Avaliacao avaliacaoDoBanco = (Avaliacao) new AvaliacaoDAO(em).Insert(avaliacao);
-		
-		em.getTransaction().commit();
-		em.close();
-		
-		result.use(Results.json()).from(avaliacaoDoBanco).serialize();
+		try {
+			//validacoes
+			if(avaliacao.getId() > 0) {
+				result.use(Results.http()).sendError(400, "O avaliacao não pode ter ID, se quiser atualizar use o method PUT");
+				return;
+			}
+			
+			
+			//inseri no banco e busca objeto persistido
+			
+			em.getTransaction().begin();
+			
+			Avaliacao avaliacaoDoBanco = (Avaliacao) new AvaliacaoDAO(em).Insert(avaliacao);
+			
+			em.getTransaction().commit();
+			em.close();
+			
+			result.use(Results.json()).from(avaliacaoDoBanco).serialize();
+		}finally {
+			EntityManagerService.LiberaConnection(em);
+		}
 		
 	}
 	
@@ -89,66 +102,76 @@ public class AvaliacaoController {
 	@Consumes("application/json")
 	public void atualizaAvaliacao(Avaliacao avaliacao) {
 		
-		//validacoes
-		if(avaliacao.getId() < 1) {
-			result.use(Results.http()).sendError(400, "O avaliacao deve ter ID apra ser atualizado, se quiser inserir um novo utilize o POST");
-			return;
-		}
-		
-		//inseri no banco e busca objeto persistido
 		EntityManager em = new JPAUtil().getEntityManager();
-		AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
-		
-		Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
-		if(avaliacaoDoBanco != null) {
+		try {
+			//validacoes
+			if(avaliacao.getId() < 1) {
+				result.use(Results.http()).sendError(400, "O avaliacao deve ter ID apra ser atualizado, se quiser inserir um novo utilize o POST");
+				return;
+			}
 			
+			//inseri no banco e busca objeto persistido
 			
-			em.getTransaction().begin();
+			AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
 			
-				avaliacaoDAO.InsertOrUpdate(avaliacao);
-			
-			em.getTransaction().commit();
-			em.close();
-			
-			result.use(Results.json()).from(avaliacaoDoBanco).serialize();
-			
-			
-		}else {
-			result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
-			return;
-		}		
+			Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
+			if(avaliacaoDoBanco != null) {
+				
+				
+				em.getTransaction().begin();
+				
+					avaliacaoDAO.InsertOrUpdate(avaliacao);
+				
+				em.getTransaction().commit();
+				em.close();
+				
+				result.use(Results.json()).from(avaliacaoDoBanco).serialize();
+				
+				
+			}else {
+				result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
+				return;
+		}	
+		}finally {
+			EntityManagerService.LiberaConnection(em);
+		}
 		
 	}
 	
 	@Delete("/avaliacoes/{avaliacao.id}")
 	public void deletaAvaliacao(Avaliacao avaliacao){
 		
-		//validacao
-		if(avaliacao.getId() < 1) {
-			result.use(Results.http()).sendError(400, "O avaliacao deve ter ID para ser deletado, se quiser inserir um novo utilize o POST");
-			return;
-		}
-		
 		EntityManager em = new JPAUtil().getEntityManager();
-		AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
-		
-		Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
-		if(avaliacaoDoBanco != null) { //verifica se existe avaliacao com aquele ID
+		try {
+			//validacao
+			if(avaliacao.getId() < 1) {
+				result.use(Results.http()).sendError(400, "O avaliacao deve ter ID para ser deletado, se quiser inserir um novo utilize o POST");
+				return;
+			}
 			
 			
-			em.getTransaction().begin();
+			AvaliacaoDAO avaliacaoDAO = new AvaliacaoDAO(em);
 			
-				avaliacaoDAO.Delete(avaliacaoDoBanco);
-			
-			em.getTransaction().commit();
-			em.close();
-			
-			result.use(Results.json()).from(avaliacaoDoBanco).serialize();
-			
-			
-		}else {
-			result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
-			return;
+			Avaliacao avaliacaoDoBanco = (Avaliacao) avaliacaoDAO.SelectPorId(avaliacao);
+			if(avaliacaoDoBanco != null) { //verifica se existe avaliacao com aquele ID
+				
+				
+				em.getTransaction().begin();
+				
+					avaliacaoDAO.Delete(avaliacaoDoBanco);
+				
+				em.getTransaction().commit();
+				em.close();
+				
+				result.use(Results.json()).from(avaliacaoDoBanco).serialize();
+				
+				
+			}else {
+				result.use(Results.http()).sendError(400, "Com o ID informado não existe nenhum avaliacao no banco");
+				return;
+			}
+		}finally {
+			EntityManagerService.LiberaConnection(em);
 		}
 	}
 	

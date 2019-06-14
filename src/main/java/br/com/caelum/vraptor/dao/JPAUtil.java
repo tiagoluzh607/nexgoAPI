@@ -13,7 +13,9 @@ import javax.persistence.Persistence;
  */
 public class JPAUtil {
 
-	private static final EntityManagerFactory emFabrica = Persistence.createEntityManagerFactory("jpa-postgres");
+	//private static final EntityManagerFactory emFabrica = Persistence.createEntityManagerFactory("jpa-postgres");
+	private static final EntityManagerFactory emFabrica = Persistence.createEntityManagerFactory("jpa-postgres-teste");
+	
 	
 
 	/**
