@@ -1,6 +1,9 @@
 package br.com.caelum.vraptor.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Aluno extends Pessoa {
