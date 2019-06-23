@@ -67,6 +67,16 @@
 		    <version>9.4-1200-jdbc41</version>
 		</dependency>
 		
+		 <!-- ################# Para Testes Automatizados ################# -->
+		<dependency>
+      		<groupId>junit</groupId>
+      		<artifactId>junit</artifactId>
+      		<version>4.11</version>
+      		<scope>test</scope>
+   		</dependency>
+   		
+   		<!-- ######################################################### -->
+		
 		
 		
 		
@@ -125,7 +135,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>api</finalName>
+		<finalName>apinexgo</finalName>
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
@@ -203,7 +213,7 @@
 		</plugins>
 	</build>
 
-	<artifactId>api</artifactId>
+	<artifactId>apinexgo</artifactId>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

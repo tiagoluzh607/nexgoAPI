@@ -1,32 +1,30 @@
 package br.com.caelum.vraptor.model;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 @MappedSuperclass
 public abstract class Model {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	protected int id;
+	@Type(type="java.lang.String")
+	@GenericGenerator(name = "uuid-gen", strategy = "uuid")
+	@GeneratedValue(generator = "uuid-gen")
+	protected String ID;
 	
-	@Column
-	protected boolean ativo = true;
-	public int getId() {
-		return id;
+	public String getID() {
+		return ID;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setID(String iD) {
+		ID = iD;
 	}
-	public boolean isAtivo() {
-		return ativo;
-	}
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
+	
 	
 	
 	

@@ -8,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.caelum.vraptor.model.Model;
-import br.com.caelum.vraptor.model.Pokemon;
 
 
 public abstract class DAO {
@@ -54,7 +53,7 @@ public abstract class DAO {
 	 * @return
 	 */
 	public Model SelectPorId(Model model) {
-		return em.find(  model.getClass(), model.getId());
+		return em.find(  model.getClass(), model.getID());
 	}
 	
 	/**

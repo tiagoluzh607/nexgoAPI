@@ -14,17 +14,14 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.dao.AlunoDAO;
 import br.com.caelum.vraptor.dao.JPAUtil;
-import br.com.caelum.vraptor.model.Aluno;
-import br.com.caelum.vraptor.model.ESexo;
 import br.com.caelum.vraptor.service.EntityManagerService;
 import br.com.caelum.vraptor.view.Results;
 
 @Controller
 public class AlunoController {
 	
-	
+	/*
 	@Inject Result result;
 
 	@Get("/alunos")
@@ -63,7 +60,7 @@ public class AlunoController {
 				return;
 			}
 				
-			result.use(Results.json()).from(alunoDoBanco).serialize();
+			result.use(Results.json()).withoutRoot().from(alunoDoBanco).serialize();
 		}finally {
 			EntityManagerService.LiberaConnection(em);
 		}	
@@ -98,7 +95,7 @@ public class AlunoController {
 			em.getTransaction().commit();
 			em.close();
 			
-			result.use(Results.json()).from(alunoDoBanco).serialize();
+			result.use(Results.json()).withoutRoot().from(alunoDoBanco).serialize();
 		}finally {
 			EntityManagerService.LiberaConnection(em);
 		}
@@ -131,7 +128,7 @@ public class AlunoController {
 				em.getTransaction().commit();
 				em.close();
 				
-				result.use(Results.json()).from(alunoDoBanco).serialize();
+				result.use(Results.json()).withoutRoot().from(alunoDoBanco).serialize();
 				
 				
 			}else {
@@ -168,7 +165,7 @@ public class AlunoController {
 				em.getTransaction().commit();
 				em.close();
 				
-				result.use(Results.json()).from(alunoDoBanco).serialize();
+				result.use(Results.json()).withoutRoot().from(alunoDoBanco).serialize();
 				
 				
 			}else {
@@ -180,5 +177,5 @@ public class AlunoController {
 		}
 	}
 	
-	
+	*/
 }

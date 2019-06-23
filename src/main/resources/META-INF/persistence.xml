@@ -27,7 +27,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/apibanco" /> <!-- BD Mane -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/olimposi_apinexgobanco" /> <!-- BD Mane -->
             <property name="javax.persistence.jdbc.user" value="postgres" /> <!-- DB User -->
             <property name="javax.persistence.jdbc.password" value="postgres" /> <!-- DB Password -->
 
@@ -54,7 +54,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/olimposi_apibanco" /> <!-- BD Mane -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/olimposi_apinexgobanco" /> <!-- BD Mane -->
             <property name="javax.persistence.jdbc.user" value="olimposi_adonai_homologacao" /> <!-- DB User -->
             <property name="javax.persistence.jdbc.password" value="@postgres@homologacao" /> <!-- DB Password -->
 
